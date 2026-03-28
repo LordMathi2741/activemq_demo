@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "4EB7RcrQv6k=",
+  "success": true,
+  "projectFilePath": "/Users/lordmathi2741/Documents/Proyects/Baila/AMQ/Sender/Sender.csproj",
+  "expectedPackageFiles": [
+    "/Users/lordmathi2741/.nuget/packages/amqpnetlite.core/2.4.3/amqpnetlite.core.2.4.3.nupkg.sha512",
+    "/Users/lordmathi2741/.nuget/packages/apache.nms/2.2.0/apache.nms.2.2.0.nupkg.sha512",
+    "/Users/lordmathi2741/.nuget/packages/apache.nms.amqp/2.4.0/apache.nms.amqp.2.4.0.nupkg.sha512",
+    "/Users/lordmathi2741/.nuget/packages/system.threading.tasks.dataflow/4.9.0/system.threading.tasks.dataflow.4.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}
