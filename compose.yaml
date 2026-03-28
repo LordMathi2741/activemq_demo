@@ -3,6 +3,6 @@
     image: apache/activemq
     ports:
       - "5672:5672"    
-      - "61613:61613"
+      - "8161:8161"
     restart: 
       on-failure
