@@ -1,89 +1,87 @@
-# .gitignore para proyecto .NET + Docker + JetBrains Rider + macOS
-# End of file
+!/README.md
+!/LICENSE
+# Keep license and README tracked
 
-composer.lock
-# Composer (if used)
+*.class
+# Composer / generated files
 
-secrets.json
-# Ignore local secret files
-
-*.iws
-*.ipr
-.idea/
-# Rider specific
-
-.idea/
-# JetBrains IDE
-
-*.sqlite
-*.db
-# Others
-
-*.DotSettings.user
-_ReSharper*/
-# Resharper
-
-*.pfx
-*.cer
-# Certificates
-
-**/Sender/bin/
-**/Receiver/bin/
-**/Core/bin/
-**/Sender/obj/
-**/Receiver/obj/
-**/Core/obj/
-# Generated files
-
-TestResults/
-# Test results
-
-.env
 docker-compose.override.yml
 # Docker
 
-Thumbs.db
-.DS_Store
-# OS files
+*~
+*.swp
+# Misc
 
-*.log
-# Logs
+*.coveragexml
+*.coverage
+coverage/
+# Coverage
 
-*.rider/
-# Rider workspace
-
-*.DotSettings
-*.DotSettings.user
-# Rider and other caches
-
-publish/
-# Dotnet publish
-
-artifacts/
-project.fragment.lock.json
-project.lock.json
-/packages/
-*.nupkg
-# NuGet
-
-.vscode/
-# Visual Studio Code
+*.[Rr]e[Ss]harper*
+_ReSharper*/
+# Resharper
 
 *.sln.iml
 .idea/
+# JetBrains Rider
+
+node_modules/
+# Node
+
+._*
+.LSOverride
+.AppleDouble
+.DS_Store
+# macOS
+
+*.userprefs
+*.local
+*.db
+# User-specific files
+
+logs/
+*.log
+# Logs
+
+publish/
+# Publish outputs
+
+ScaffoldedFiles/
+# ASP.NET Scaffolding
+
+project.nuget.cache
+project.assets.json
+project.lock.json
+.nuget/
+packages/
+*.nupkg
+# NuGet
+
+*.Rider*/
+*.sublime-workspace
+*.sublime-project
+.idea/
 # Rider
+
+**/Release/**
+**/Debug/**
+**/Release/
+**/Debug/
+Release/**
+Debug/**
+Release/
+Debug/
+*/obj/
+*/bin/
+**/obj/
+**/bin/
+obj/
+bin/
+# Build outputs
 
 *.sln.docstates
 *.userosscache
 *.suo
 *.user
 .vs/
-# Visual Studio files
-
-/*/obj/
-/*/bin/
-/obj/
-/bin/
-# Build Folders
-
 

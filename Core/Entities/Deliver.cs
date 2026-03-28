@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Core.Entities;
 
 public sealed class Deliver : BaseEntity

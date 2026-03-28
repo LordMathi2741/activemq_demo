@@ -1,61 +1,75 @@
 # AMQ (Proyecto)
 
-Este repositorio contiene un ejemplo simple de envío/recepción de mensajes hacia un broker AMQP (ActiveMQ/Artemis) usando proyectos .NET (Sender, Receiver y Core).
+Repositorio pequeño con tres proyectos .NET y un contenedor con un broker AMQP (ActiveMQ).
 
-Estructura principal
-- `Core/` - Entidades y lógica compartida.
-- `Sender/` - Proyecto que envía mensajes al broker.
-- `Receiver/` - Proyecto que recibe mensajes desde el broker.
-- `compose.yaml` - Configuración opcional para levantar el broker en Docker.
+Estructura principal:
+- Core/: Entidades y lógica compartida
+- Sender/: Aplicación que envía mensajes
+- Receiver/: Aplicación que recibe mensajes
+- compose.yaml: Definición del contenedor del broker (ActiveMQ)
 
-Requisitos
-- .NET SDK 8.x (dotnet)
-- Docker (si arrancas el broker en contenedor)
+Cómo levantar el broker (Docker):
 
-Levantar el broker (contenedor)
-1. Asegúrate de que `compose.yaml` exponga/publíque los puertos necesarios (ej. 5672 para AMQP, 8161 para consola web):
-
-   ```bash
-   docker compose up -d
-   docker ps
-   docker port <container-id>
-   ```
-
-2. Comprueba que desde tu host puedes alcanzar el puerto AMQP (ej. 5672):
-
-   ```bash
-   nc -vz localhost 5672
-   lsof -nP -iTCP:5672 -sTCP:LISTEN
-   docker logs <container-id> | tail -n 200
-   ```
-
-Ejecución de los proyectos
-Desde la raíz del repo, puedes ejecutar cualquiera de los proyectos con `dotnet run --project`:
+1. Asegúrate de tener Docker Desktop instalado y funcionando.
+2. Desde la raíz del proyecto:
 
 ```bash
-# Enviar un mensaje (Sender)
-dotnet run --project Sender
-
-# Ejecutar receptor (Receiver)
-dotnet run --project Receiver
+docker compose up -d
 ```
 
-Configuración de conexión
-Los proyectos usan por defecto `BROKER_HOST=localhost` y `BROKER_PORT=5672`. Si el broker corre en contenedor, asegúrate de mapear los puertos con `ports:` en `compose.yaml` (no sólo `expose:`). También puedes exportar variables antes de ejecutar:
+3. Verifica que el contenedor esté corriendo:
 
 ```bash
-export BROKER_HOST=localhost
-export BROKER_PORT=5672
-export BROKER_USER=admin
-export BROKER_PASS=admin
+docker ps
 ```
 
-Diagnóstico rápido
-- Si ves en logs del broker que escucha en un nombre interno (ej. `2a38ff7662b9:5672`), debes publicar el puerto para acceder desde el host.
-- Revisa `docker logs` para confirmar que AMQP está habilitado y sin errores.
-- Asegúrate de usar el proveedor NMS correcto (`Apache.NMS.AMQP` para AMQP).
-- Para obtener más detalle en excepciones, el código de ejemplo imprime `ex.ToString()` con la traza completa.
+4. Revisa logs si algo falla:
 
-Licencia
-Este proyecto está bajo la licencia MIT (archivo `LICENSE`).
+```bash
+docker compose logs -f AMQ
+# o
+docker logs -f <container_id>
+```
+
+Acceso a la consola web del broker:
+- Web Console: http://localhost:8161 (puerto mapeado en `compose.yaml`)
+- Credenciales por defecto (ActiveMQ clásico): `admin` / `admin` (si aplica)
+
+Probar conectividad AMQP desde la máquina anfitriona:
+
+- Usando nc (netcat):
+
+```bash
+nc -vz localhost 5672
+```
+
+- Usando telnet (simple chequeo de puerto):
+
+```bash
+telnet localhost 5672
+```
+
+Si ves mensajes como "Listening for connections at: amqp://2a38ff7662b9:5672" en los logs del contenedor, eso indica que el broker está escuchando en la interfaz interna del contenedor (el nombre "2a38ff7662b9" es el hostname del contenedor). Con el mapeo de puertos (`5672:5672`) podrás conectarte desde el host usando `localhost:5672`.
+
+Conexión desde otros contenedores en la misma red de Docker Compose:
+- Cuando corras otra tarea como servicio en el mismo `docker compose` (o dentro del mismo proyecto), el hostname a usar será el nombre del servicio (`AMQ`). Por ejemplo, la URL desde otro contenedor sería `amqp://AMQ:5672`.
+
+Ejecutar proyectos .NET (desde la raíz o dentro de cada carpeta Sender/Receiver):
+
+```bash
+cd Sender && dotnet run
+cd Receiver && dotnet run
+```
+
+Puntos comunes de fallo y cómo revisarlos:
+- El cliente intenta conectarse a `2a38ff7662b9` (hostname interno): desde el host debes usar `localhost` si el puerto está mapeado.
+- Firewall / reglas de seguridad bloquean el puerto 5672.
+- El contenedor no expuso correctamente el puerto (revisa `docker ps` y `docker compose ps`).
+- El broker requiere credenciales o un protocolo diferente; revisa la documentación de la imagen `apache/activemq` que usas.
+- Si usas una versión antigua de Docker (Docker Toolbox), el host no será `localhost` sino la IP de la VM `docker-machine ip default`.
+
+Si necesitas, puedo revisar los strings de conexión en el código `Sender`/`Receiver` y proponerte la forma correcta (por ejemplo `amqp://guest:guest@localhost:5672` o `amqp://localhost:5672`).
+
+Más ayuda:
+- Para depuración, adjunta los logs del contenedor (`docker compose logs AMQ`) y el string de conexión que usan `Sender` y `Receiver`.
 
