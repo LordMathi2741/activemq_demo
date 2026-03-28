@@ -1,0 +1,89 @@
+# .gitignore para proyecto .NET + Docker + JetBrains Rider + macOS
+# End of file
+
+composer.lock
+# Composer (if used)
+
+secrets.json
+# Ignore local secret files
+
+*.iws
+*.ipr
+.idea/
+# Rider specific
+
+.idea/
+# JetBrains IDE
+
+*.sqlite
+*.db
+# Others
+
+*.DotSettings.user
+_ReSharper*/
+# Resharper
+
+*.pfx
+*.cer
+# Certificates
+
+**/Sender/bin/
+**/Receiver/bin/
+**/Core/bin/
+**/Sender/obj/
+**/Receiver/obj/
+**/Core/obj/
+# Generated files
+
+TestResults/
+# Test results
+
+.env
+docker-compose.override.yml
+# Docker
+
+Thumbs.db
+.DS_Store
+# OS files
+
+*.log
+# Logs
+
+*.rider/
+# Rider workspace
+
+*.DotSettings
+*.DotSettings.user
+# Rider and other caches
+
+publish/
+# Dotnet publish
+
+artifacts/
+project.fragment.lock.json
+project.lock.json
+/packages/
+*.nupkg
+# NuGet
+
+.vscode/
+# Visual Studio Code
+
+*.sln.iml
+.idea/
+# Rider
+
+*.sln.docstates
+*.userosscache
+*.suo
+*.user
+.vs/
+# Visual Studio files
+
+/*/obj/
+/*/bin/
+/obj/
+/bin/
+# Build Folders
+
+

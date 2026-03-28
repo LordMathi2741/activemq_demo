@@ -8,6 +8,4 @@ public enum EStatues
     ONSUCCESS = 1,
     [Description("Deliver failed!")]
     ONFAILURE = 2,
-    [Description("Connection failed!")]
-    CONNECTIONFAILED = 3,
 }

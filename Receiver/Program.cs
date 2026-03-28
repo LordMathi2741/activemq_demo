@@ -28,7 +28,7 @@ using (var connection = factory.CreateConnection())
     catch (Exception ex)
     {
         var response = Response<string>.Failure(
-            EStatues.CONNECTIONFAILED,
+            EStatues.ONFAILURE,
             ex.Message
         );
         Console.WriteLine(JsonSerializer.Serialize(response));
